@@ -40,8 +40,9 @@ function calculateQuotation() {
   const frameCost = area * frameValue;
   const laminationCost = area * laminationValue;
   const addonsCost = area * addonsValue;
-
   const total = (materialCost + frameCost + laminationCost + addonsCost + designing) * quantity;
+
+  const rupee = "₹";
 
   const quoteHTML = `
     <div id="pdfContent" style="padding:10px; background:#fff; color:#000;">
@@ -56,13 +57,13 @@ function calculateQuotation() {
       <p><strong>Quantity:</strong> ${quantity}</p>
 
       <table style="width:100%; border-collapse: collapse;" border="1">
-        <tr><th>Description</th><th>Amount (₹)</th></tr>
-        <tr><td>Material (${materialName})</td><td>${(materialCost*quantity).toFixed(2)}</td></tr>
-        <tr><td>Frame (${frameName})</td><td>${(frameCost*quantity).toFixed(2)}</td></tr>
-        <tr><td>Lamination (${laminationName})</td><td>${(laminationCost*quantity).toFixed(2)}</td></tr>
-        <tr><td>Add-ons (${addonsName})</td><td>${(addonsCost*quantity).toFixed(2)}</td></tr>
-        <tr><td>Designing Charges</td><td>${(designing*quantity).toFixed(2)}</td></tr>
-        <tr><td><strong>Total</strong></td><td><strong>${total.toFixed(2)}</strong></td></tr>
+        <tr><th>Description</th><th>Amount (${rupee})</th></tr>
+        <tr><td>Material (${materialName})</td><td>${rupee}${(materialCost*quantity).toFixed(2)}</td></tr>
+        <tr><td>Frame (${frameName})</td><td>${rupee}${(frameCost*quantity).toFixed(2)}</td></tr>
+        <tr><td>Lamination (${laminationName})</td><td>${rupee}${(laminationCost*quantity).toFixed(2)}</td></tr>
+        <tr><td>Add-ons (${addonsName})</td><td>${rupee}${(addonsCost*quantity).toFixed(2)}</td></tr>
+        <tr><td>Designing Charges</td><td>${rupee}${(designing*quantity).toFixed(2)}</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>${rupee}${total.toFixed(2)}</strong></td></tr>
       </table>
 
       ${remark ? `<p><strong>Remark:</strong> ${remark}</p>` : ''}
@@ -89,7 +90,23 @@ function calculateQuotation() {
 function printQuotation() {
   const quote = document.getElementById("quotation");
   if (!quote.innerHTML.trim()) return alert("Please generate the quotation first!");
-  window.print();
+
+  const printWindow = window.open("", "_blank");
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Quotation</title>
+        <style>
+          body { font-family: Arial; padding: 20px; }
+          table { width: 100%; border-collapse: collapse; }
+          th, td { border: 1px solid #333; padding: 6px; text-align: left; }
+        </style>
+      </head>
+      <body>${quote.innerHTML}</body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.print();
 }
 
 async function downloadPDF() {
@@ -97,12 +114,11 @@ async function downloadPDF() {
   const content = document.getElementById("quotation");
   if (!content.innerHTML.trim()) return alert("Please generate the quotation first!");
 
-  const canvas = await html2canvas(content, { scale: 2 });
+  const canvas = await html2canvas(content, { scale: 2, useCORS: true });
   const imgData = canvas.toDataURL("image/png");
   const pdf = new jsPDF("p", "mm", "a4");
 
   const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
   const imgWidth = pageWidth - 20;
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
