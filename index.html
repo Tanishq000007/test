@@ -9,67 +9,64 @@
 <body>
 <div class="container">
   <h1>Flex Printing Quotation Calculator</h1>
-  <form id="quoteForm">
-    <label>Customer Name:</label>
-    <input type="text" id="customerName" required>
+  
+  <label>Customer Name:</label>
+  <input type="text" id="customerName" required>
 
-    <label>Quotation Date:</label>
-    <input type="date" id="quoteDate" required>
+  <label>Quotation Date:</label>
+  <input type="date" id="quoteDate" required>
 
-    <label>Width (in inches):</label>
-    <input type="number" id="width" required>
+  <label>Width (in inches):</label>
+  <input type="number" id="width" required min="1" placeholder="Enter width in inches">
 
-    <label>Height (in inches):</label>
-    <input type="number" id="height" required>
+  <label>Height (in inches):</label>
+  <input type="number" id="height" required min="1" placeholder="Enter height in inches">
 
-    <label>Quantity:</label>
-    <input type="number" id="quantity" value="1" min="1">
+  <label>Quantity:</label>
+  <input type="number" id="quantity" value="1" min="1">
 
-    <label>Material:</label>
-    <select id="material">
-      <option value="0.07">White Back - ₹0.07</option>
-      <option value="0.083">Black Back - ₹0.083</option>
-      <option value="0.14">Matte Fabric - ₹0.14</option>
-      <option value="0.17">Star - ₹0.17</option>
-      <option value="0.25">Back Light - ₹0.25</option>
-      <option value="0.25">Vinyl - ₹0.25</option>
-      <option value="0.25">Oneway - ₹0.25</option>
-      <option value="0.35">Radium - ₹0.35</option>
-      <option value="0.45">Sunboard - ₹0.45</option>
-      <option value="0.7">Radium Sunboard - ₹0.7</option>
-      <option value="8">Acrylic - ₹8</option>
-    </select>
+  <label>Material:</label>
+  <select id="material">
+    <option value="0.07">White Back - ₹0.07/sq in</option>
+    <option value="0.08">Black Back - ₹0.08/sq in</option>
+    <option value="0.14">Matte Fabric - ₹0.14/sq in</option>
+    <option value="0.17">Star - ₹0.17/sq in</option>
+    <option value="0.25">Back Light - ₹0.25/sq in</option>
+    <option value="0.25">Vinyl - ₹0.25/sq in</option>
+    <option value="0.25">Oneway - ₹0.25/sq in</option>
+    <option value="0.35">Radium - ₹0.35/sq in</option>
+    <option value="0.45">Sunboard - ₹0.45/sq in</option>
+    <option value="0.7">Radium Sunboard - ₹0.7/sq in</option>
+    <option value="8">Acrylic - ₹8/sq in</option>
+  </select>
 
-    <label>Frame:</label>
-    <select id="frame">
-      <option value="0">No</option>
-      <option value="0.27">Yes - ₹0.27/sq.in</option>
-    </select>
+  <label>Frame:</label>
+  <select id="frame">
+    <option value="0">No</option>
+    <option value="0.27">Yes - ₹0.27/sq in</option>
+  </select>
 
-    <label>Lamination:</label>
-    <select id="lamination">
-      <option value="0">None</option>
-      <option value="0.7">Gloss - ₹0.7/sq.in</option>
-      <option value="0.7">Matte - ₹0.7/sq.in</option>
-    </select>
+  <label>Lamination:</label>
+  <select id="lamination">
+    <option value="0">None</option>
+    <option value="0.7">Gloss - ₹0.7/sq in</option>
+    <option value="0.7">Matte - ₹0.7/sq in</option>
+  </select>
 
-    <label>Add-ons:</label><br />
-    <input type="checkbox" id="eyelets" value="0" /> Eyelets (Free)<br /><br />
+  <label>Add-ons:</label><br />
+  <input type="checkbox" id="eyelets" value="0"> Eyelets (Free)<br><br>
 
-    <label>Designing Charges (₹):</label>
-    <input type="number" id="designing" placeholder="Enter designing cost">
+  <label>Designing Charges (₹):</label>
+  <input type="number" id="designing" value="0" min="0">
 
-    <label>Remark:</label>
-    <textarea id="remark" placeholder="Enter any remark for the quotation"></textarea>
+  <label>Remark:</label>
+  <textarea id="remark" placeholder="Enter remark"></textarea>
 
-    <button type="button" id="calcBtn">Calculate</button>
-    <button type="button" id="downloadPdfBtn">Download PDF</button>
-  </form>
+  <button id="calcBtn">Calculate</button>
 
   <div id="quotation" class="quotation"></div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
