@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
   document.getElementById("calcBtn").addEventListener("click", calculateQuotation);
-  document.getElementById("printBtn").addEventListener("click", () => window.print());
+  document.getElementById("printBtn").addEventListener("click", printQuotation);
   document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
 });
 
@@ -86,18 +86,27 @@ function calculateQuotation() {
   document.getElementById("quotation").innerHTML = quoteHTML;
 }
 
+function printQuotation() {
+  const quote = document.getElementById("quotation");
+  if (!quote.innerHTML.trim()) return alert("Please generate the quotation first!");
+  window.print();
+}
+
 async function downloadPDF() {
   const { jsPDF } = window.jspdf;
-  const content = document.getElementById("pdfContent");
-  if (!content) return alert("Please generate the quotation first!");
+  const content = document.getElementById("quotation");
+  if (!content.innerHTML.trim()) return alert("Please generate the quotation first!");
 
-  const pdf = new jsPDF("p", "pt", "a4");
-  await pdf.html(content, {
-    callback: function (doc) {
-      const name = document.getElementById("customerName").value || "Quotation";
-      doc.save(`${name}_Quotation.pdf`);
-    },
-    margin: [20, 20, 20, 20],
-    autoPaging: "text",
-  });
+  const canvas = await html2canvas(content, { scale: 2 });
+  const imgData = canvas.toDataURL("image/png");
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const pageWidth = pdf.internal.pageSize.getWidth();
+  const pageHeight = pdf.internal.pageSize.getHeight();
+  const imgWidth = pageWidth - 20;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
+  const name = document.getElementById("customerName").value || "Quotation";
+  pdf.save(`${name}_Quotation.pdf`);
 }
