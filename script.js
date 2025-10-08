@@ -15,9 +15,8 @@ function calculateQuotation() {
     }
 
     const materialDropdown = document.getElementById("material");
-    let materialValue = parseFloat(materialDropdown.value);
+    const materialValue = parseFloat(materialDropdown.value);
     const materialName = materialDropdown.options[materialDropdown.selectedIndex].text;
-    if (materialName.includes("Black Back")) materialValue = 0.083;
 
     const frameDropdown = document.getElementById("frame");
     const frameValue = parseFloat(frameDropdown.value);
@@ -27,9 +26,9 @@ function calculateQuotation() {
     const laminationValue = parseFloat(laminationDropdown.value);
     const laminationName = laminationDropdown.options[laminationDropdown.selectedIndex].text;
 
-    const eyeletsChecked = document.getElementById("eyelets").checked;
-    const addonsValue = 0;
-    const addonsName = eyeletsChecked ? "Eyelets" : "None";
+    const addonsDropdown = document.getElementById("addons");
+    const addonsValue = parseFloat(addonsDropdown.value);
+    const addonsName = addonsDropdown.options[addonsDropdown.selectedIndex].text;
 
     const designing = parseFloat(document.getElementById("designing").value) || 0;
     const remark = document.getElementById("remark").value;
