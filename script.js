@@ -5,23 +5,18 @@ document.addEventListener("DOMContentLoaded", function() {
 function calculateQuotation() {
     const name = document.getElementById("customerName").value.trim();
     const date = document.getElementById("quoteDate").value;
-    const widthInches = parseFloat(document.getElementById("width").value) || 0;
-    const heightInches = parseFloat(document.getElementById("height").value) || 0;
+    const width = parseFloat(document.getElementById("width").value) || 0;
+    const height = parseFloat(document.getElementById("height").value) || 0;
     const quantity = parseInt(document.getElementById("quantity").value) || 1;
 
-    if (!name || !date || widthInches <= 0 || heightInches <= 0) {
+    if (!name || !date || width <= 0 || height <= 0) {
         alert("Please fill all required fields with valid numbers!");
         return;
     }
 
-    // Convert inches to feet
-    const width = widthInches / 12;
-    const height = heightInches / 12;
-
     const materialDropdown = document.getElementById("material");
     let materialValue = parseFloat(materialDropdown.value);
     const materialName = materialDropdown.options[materialDropdown.selectedIndex].text;
-    // Update Black Back rate
     if (materialName.includes("Black Back")) materialValue = 0.083;
 
     const frameDropdown = document.getElementById("frame");
@@ -33,23 +28,20 @@ function calculateQuotation() {
     const laminationName = laminationDropdown.options[laminationDropdown.selectedIndex].text;
 
     const eyeletsChecked = document.getElementById("eyelets").checked;
-    const addonsValue = 0; // Eyelets are free
+    const addonsValue = 0;
     const addonsName = eyeletsChecked ? "Eyelets" : "None";
 
     const designing = parseFloat(document.getElementById("designing").value) || 0;
     const remark = document.getElementById("remark").value;
 
-    const areaSqFt = width * height; // area in square feet
-    const areaSqInches = areaSqFt * 144; // convert back to sq inches for cost calculations
+    const area = width * height; // area in sq ft
 
-    const materialCost = areaSqInches * materialValue;
-    const frameCost = areaSqInches * frameValue;
-    const laminationCost = areaSqInches * laminationValue;
+    const materialCost = area * materialValue;
+    const frameCost = area * frameValue;
+    const laminationCost = area * laminationValue;
 
-    // Total cost
     const total = (materialCost + frameCost + laminationCost + addonsValue) * quantity + designing;
 
-    // Quotation HTML
     const quoteHTML = `
       <div id="pdfContent" style="padding:20px; background:#fff; color:#000; font-family:Arial, sans-serif;">
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #000; padding-bottom:10px;">
@@ -59,7 +51,7 @@ function calculateQuotation() {
 
         <p><strong>Customer:</strong> ${name}</p>
         <p><strong>Date:</strong> ${date}</p>
-        <p><strong>Size:</strong> ${width.toFixed(2)}' × ${height.toFixed(2)}' (${areaSqFt.toFixed(2)} sq.ft)</p>
+        <p><strong>Size:</strong> ${width.toFixed(2)}' × ${height.toFixed(2)}' (${area.toFixed(2)} sq.ft)</p>
         <p><strong>Quantity:</strong> ${quantity}</p>
 
         <table style="width:100%; border-collapse: collapse; margin-top:10px;" border="1">
