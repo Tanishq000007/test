@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("calcBtn").addEventListener("click", calculateQuotation);
+    document.getElementById("printBtn").addEventListener("click", printQuotation);
 });
 
 function calculateQuotation() {
@@ -42,7 +43,7 @@ function calculateQuotation() {
     const total = (materialCost + frameCost + laminationCost + addonsValue) * quantity + designing;
 
     const quoteHTML = `
-      <div id="pdfContent" style="padding:20px; background:#fff; color:#000; font-family:Arial, sans-serif;">
+      <div id="printArea" style="padding:20px; background:#fff; color:#000; font-family:Arial, sans-serif;">
         <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid #000; padding-bottom:10px;">
           <h2 style="margin:0;">Quotation</h2>
           <img src="logo.png" alt="Logo" style="width:100px; height:auto;">
@@ -81,4 +82,20 @@ function calculateQuotation() {
     `;
 
     document.getElementById("quotation").innerHTML = quoteHTML;
+}
+
+function printQuotation() {
+    const printContent = document.getElementById("quotation").innerHTML;
+    if (!printContent.trim()) {
+        alert("Please calculate quotation before printing!");
+        return;
+    }
+    const printWindow = window.open('', '', 'height=800,width=800');
+    printWindow.document.write('<html><head><title>Quotation</title>');
+    printWindow.document.write('<style>table{border-collapse:collapse;width:100%;} th,td{padding:8px;text-align:left;}</style>');
+    printWindow.document.write('</head><body>');
+    printWindow.document.write(printContent);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.print();
 }
