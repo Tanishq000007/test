@@ -16,11 +16,11 @@
   <label>Quotation Date:</label>
   <input type="date" id="quoteDate" required>
 
-  <label>Width (in feet):</label>
-  <input type="number" id="width" required min="1" placeholder="Enter width in feet">
+  <label>Width (in ft):</label>
+  <input type="number" id="width" required min="1">
 
-  <label>Height (in feet):</label>
-  <input type="number" id="height" required min="1" placeholder="Enter height in feet">
+  <label>Height (in ft):</label>
+  <input type="number" id="height" required min="1">
 
   <label>Quantity:</label>
   <input type="number" id="quantity" value="1" min="1">
@@ -36,7 +36,7 @@
     <option value="35">Oneway - ₹35</option>
     <option value="50">Radium - ₹50</option>
     <option value="65">Sunboard - ₹65</option>
-    <option value="100">Radium Sunboards - ₹100</option>
+    <option value="100">Radium Sunboard - ₹100</option>
   </select>
 
   <label>Frame:</label>
@@ -55,7 +55,7 @@
   <label>Add-ons:</label>
   <select id="addons">
     <option value="0">None</option>
-    <option value="0">Eyelets</option>
+    <option value="0">Eyelets (Free)</option>
   </select>
 
   <label>Designing Charges (₹):</label>
@@ -65,11 +65,14 @@
   <textarea id="remark" placeholder="Enter remark"></textarea>
 
   <button id="calcBtn">Calculate</button>
-  <button id="printBtn" style="background:#28a745;">Print Quotation</button>
+  <button id="printBtn" style="background:green;">Print</button>
+  <button id="pdfBtn" style="background:darkred;">Download PDF</button>
 
   <div id="quotation" class="quotation"></div>
 </div>
 
+<!-- jsPDF for PDF Download -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
