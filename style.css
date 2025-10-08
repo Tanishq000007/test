@@ -35,3 +35,17 @@ button:hover {
   border: 1px solid #ddd;
   background: #fafafa;
 }
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #quotation, #quotation * {
+    visibility: visible;
+  }
+  #quotation {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}
