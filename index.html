@@ -3,89 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Flex Printing Quotation Calculator</title>
+<title>Digital Printing Calculator</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
 
   <!-- Header with logo -->
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-    <h1>Flex Printing Quotation Calculator</h1>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <h1>Digital Printing Calculator</h1>
     <img src="logo.png" alt="Logo" style="width:100px; height:auto;">
   </div>
 
+  <!-- Customer Details -->
   <label>Customer Name:</label>
-  <input type="text" id="customerName" required>
+  <input type="text" id="customerName" placeholder="Enter customer name">
 
   <label>Contact Number:</label>
-  <input type="tel" id="customerContact" placeholder="Enter contact number" required>
+  <input type="tel" id="customerContact" placeholder="Enter contact number">
 
   <label>Quotation Date:</label>
-  <input type="date" id="quoteDate" required>
+  <input type="date" id="quoteDate">
 
-  <label>Width (in ft):</label>
-  <input type="number" id="width" required min="1">
-
-  <label>Height (in ft):</label>
-  <input type="number" id="height" required min="1">
-
-  <label>Quantity:</label>
-  <input type="number" id="quantity" value="1" min="1">
-
-  <label>Material:</label>
-  <select id="material">
-    <option value="10">White Back - ₹10</option>
-    <option value="12">Black Back - ₹12</option>
-    <option value="20">Matte Fabric - ₹20</option>
-    <option value="25">Star - ₹25</option>
-    <option value="35">Back Light - ₹35</option>
-    <option value="35">Vinyl - ₹35</option>
-    <option value="35">Oneway - ₹35</option>
-    <option value="50">Radium - ₹50</option>
-    <option value="65">Sunboard - ₹65</option>
-    <option value="100">Radium Sunboard - ₹100</option>
+  <!-- Job Details -->
+  <label>Paper Type:</label>
+  <select id="paperType">
+    <option value="A">Paper Type A</option>
+    <option value="B">Paper Type B</option>
   </select>
 
-  <label>Frame:</label>
-  <select id="frame">
-    <option value="0">No</option>
-    <option value="25">Yes - ₹25/sq ft</option>
+  <label>Printing Type:</label>
+  <select id="printingType">
+    <option value="A">Printing Type A</option>
+    <option value="B">Printing Type B</option>
   </select>
 
   <label>Lamination:</label>
   <select id="lamination">
-    <option value="0">None</option>
-    <option value="10">Gloss - ₹10/sq ft</option>
-    <option value="10">Matte - ₹10/sq ft</option>
+    <option value="A">Lamination A</option>
+    <option value="B">Lamination B</option>
   </select>
 
-  <label>Add-ons:</label>
-  <select id="addons">
-    <option value="0">None</option>
-    <option value="0">Eyelets (Free)</option>
+  <label>Cutting:</label>
+  <select id="cutting">
+    <option value="A">Cutting A</option>
+    <option value="B">Cutting B</option>
+  </select>
+
+  <label>Eyelets per piece:</label>
+  <select id="eyelets">
+    <option value="A">Eyelets A</option>
+    <option value="B">Eyelets B</option>
+  </select>
+
+  <label>UV:</label>
+  <select id="uv">
+    <option value="A">UV A</option>
+    <option value="B">UV B</option>
+  </select>
+
+  <label>Foil:</label>
+  <select id="foil">
+    <option value="A">Foil A</option>
+    <option value="B">Foil B</option>
   </select>
 
   <label>Designing Charges (₹):</label>
-  <input type="number" id="designing" value="0" min="0">
+  <input type="number" id="designing" value="0">
 
   <label>Discount (₹):</label>
-  <input type="number" id="discount" value="0" min="0">
+  <input type="number" id="discount" value="0">
 
-  <label>Remark:</label>
-  <textarea id="remark" placeholder="Enter remark"></textarea>
+  <label>GST:</label>
+  <select id="gst">
+    <option value="0">0%</option>
+    <option value="5">5%</option>
+    <option value="18">18%</option>
+  </select>
 
+  <!-- Action Buttons -->
   <button id="calcBtn">Calculate</button>
   <button id="printBtn" style="background:green;">Print</button>
   <button id="pdfBtn" style="background:darkred;">Download PDF</button>
 
+  <!-- Quotation Preview -->
   <div id="quotation" class="quotation"></div>
+
 </div>
 
 <!-- Libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
 <script src="script.js"></script>
 </body>
 </html>
