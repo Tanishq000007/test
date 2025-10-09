@@ -1,3 +1,7 @@
+
+
+
+
 body {
   font-family: Arial, sans-serif;
   background: #f3f4f6;
@@ -5,7 +9,7 @@ body {
   padding: 0;
 }
 .container {
-  max-width: 650px;
+  max-width: 600px;
   margin: 40px auto;
   background: white;
   padding: 20px;
@@ -25,8 +29,6 @@ button {
   color: white;
   cursor: pointer;
   border: none;
-  padding: 10px;
-  border-radius: 5px;
 }
 button:hover {
   opacity: 0.9;
@@ -36,12 +38,6 @@ button:hover {
   padding: 15px;
   border: 1px solid #ddd;
   background: #fafafa;
-}
-.footer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  font-size: 14px;
 }
 @media print {
   body * {
