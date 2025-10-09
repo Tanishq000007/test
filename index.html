@@ -1,129 +1,85 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Printing Calculator</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flex Printing Quotation Calculator</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="calculator-container">
-        <header>
-            <img src="logo.png" alt="Logo" class="logo">
-            <h1>Digital Printing Calculator</h1>
-        </header>
+<div class="container">
+  <h1>Flex Printing Quotation Calculator</h1>
+  
+  <label>Customer Name:</label>
+  <input type="text" id="customerName" required>
 
-        <section class="calculator-form">
-            <label for="customerName">Customer Name:</label>
-            <input type="text" id="customerName" placeholder="Enter customer name">
+  <label>Quotation Date:</label>
+  <input type="date" id="quoteDate" required>
 
-            <label for="quotationDate">Quotation Date:</label>
-            <input type="date" id="quotationDate">
+  <label>Width (in ft):</label>
+  <input type="number" id="width" required min="1">
 
-            <label for="width">Width (in ft):</label>
-            <input type="number" id="width" placeholder="Enter width">
+  <label>Height (in ft):</label>
+  <input type="number" id="height" required min="1">
 
-            <label for="height">Height (in ft):</label>
-            <input type="number" id="height" placeholder="Enter height">
+  <label>Quantity:</label>
+  <input type="number" id="quantity" value="1" min="1">
 
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" placeholder="Enter quantity">
+  <label>Material:</label>
+  <select id="material">
+    <option value="10">White Back - ₹10</option>
+    <option value="12">Black Back - ₹12</option>
+    <option value="20">Matte Fabric - ₹20</option>
+    <option value="25">Star - ₹25</option>
+    <option value="35">Back Light - ₹35</option>
+    <option value="35">Vinyl - ₹35</option>
+    <option value="35">Oneway - ₹35</option>
+    <option value="50">Radium - ₹50</option>
+    <option value="65">Sunboard - ₹65</option>
+    <option value="100">Radium Sunboard - ₹100</option>
+  </select>
 
-            <label for="material">Material:</label>
-            <select id="material">
-                <option value="White Back">White Back - ₹10</option>
-                <option value="Black Back">Black Back - ₹12</option>
-                <option value="Matte Fabric">Matte Fabric - ₹20</option>
-                <option value="Star">Star - ₹25</option>
-                <option value="Back Light">Back Light - ₹35</option>
-                <option value="Vinyl">Vinyl - ₹35</option>
-                <option value="Oneway">Oneway - ₹35</option>
-                <option value="Radium">Radium - ₹50</option>
-                <option value="Sunboard">Sunboard - ₹65</option>
-                <option value="Radium Sunboard">Radium Sunboard - ₹100</option>
-            </select>
+  <label>Frame:</label>
+  <select id="frame">
+    <option value="0">No</option>
+    <option value="25">Yes - ₹25/sq ft</option>
+  </select>
 
-            <label for="frame">Frame:</label>
-            <select id="frame">
-                <option value="No">No</option>
-                <option value="Yes">Yes - ₹25/sq ft</option>
-            </select>
+  <label>Lamination:</label>
+  <select id="lamination">
+    <option value="0">None</option>
+    <option value="10">Gloss - ₹10/sq ft</option>
+    <option value="10">Matte - ₹10/sq ft</option>
+  </select>
 
-            <label for="lamination">Lamination:</label>
-            <select id="lamination">
-                <option value="None">None</option>
-                <option value="Gloss">Gloss - ₹10/sq ft</option>
-                <option value="Matte">Matte - ₹10/sq ft</option>
-            </select>
+  <label>Add-ons:</label>
+  <select id="addons">
+    <option value="0">None</option>
+    <option value="0">Eyelets (Free)</option>
+  </select>
 
-            <label for="eyelets">Eyelets:</label>
-            <select id="eyelets">
-                <option value="None">None</option>
-                <option value="Free">Free</option>
-            </select>
+  <label>Designing Charges (₹):</label>
+  <input type="number" id="designing" value="0" min="0">
 
-            <label for="designingCharges">Designing Charges (₹):</label>
-            <input type="number" id="designingCharges" placeholder="Enter designing charges">
+  <label>Discount (₹):</label>
+  <input type="number" id="discount" value="0" min="0">
 
-            <label for="discount">Discount (₹):</label>
-            <input type="number" id="discount" placeholder="Enter discount">
+  <label>Remark:</label>
+  <textarea id="remark" placeholder="Enter remark"></textarea>
 
-            <label for="gst">GST:</label>
-            <select id="gst">
-                <option value="0">0%</option>
-                <option value="5">5%</option>
-                <option value="18">18%</option>
-            </select>
+  <button id="calcBtn">Calculate</button>
+  <button id="printBtn" style="background:green;">Print</button>
+  <button id="pdfBtn" style="background:darkred;">Download PDF</button>
 
-            <button onclick="calculateQuotation()">Calculate</button>
-            <button onclick="downloadPDF()">Download PDF</button>
-            <button onclick="printQuotation()">Print</button>
-        </section>
+  <div id="quotation" class="quotation"></div>
+</div>
 
-        <section id="quotation" class="quotation" style="display:none;">
-            <div class="quotation-header">
-                <h2>Digital Printing Quotation</h2>
-                <p><strong>Customer Name:</strong> <span id="qCustomerName"></span></p>
-                <p><strong>Quotation Date:</strong> <span id="qQuotationDate"></span></p>
-            </div>
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-            <table id="quotationTable">
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Details</th>
-                        <th>Cost (₹)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Dynamic content will be inserted here -->
-                </tbody>
-            </table>
-
-            <div class="quotation-footer">
-                <p><strong>Subtotal:</strong> ₹<span id="subtotal"></span></p>
-                <p><strong>Discount:</strong> ₹<span id="discountAmount"></span></p>
-                <p><strong>GST:</strong> ₹<span id="gstAmount"></span></p>
-                <p><strong>Total:</strong> ₹<span id="totalAmount"></span></p>
-            </div>
-
-            <div class="footer">
-                <div class="footer-left">
-                    <p>9368885855, 9359995855</p>
-                    <p>VIMALPRESS@GMAIL.COM</p>
-                    <p>VIMALPRESS.COM</p>
-                </div>
-                <div class="footer-center">
-                    <p>RATES VALID FOR 15 DAYS FROM QUOTATION CREATED</p>
-                </div>
-                <div class="footer-right">
-                    <p>Signature</p>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
