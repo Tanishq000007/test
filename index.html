@@ -25,6 +25,9 @@
   <label>Quotation Date:</label>
   <input type="date" id="quoteDate">
 
+  <label>Quantity:</label>
+  <input type="number" id="quantity" value="1" min="1">
+
   <!-- Job Details -->
   <label>Paper Type:</label>
   <select id="paperType">
@@ -80,8 +83,11 @@
     <option value="4">HALF DYE CUTTING - ₹4</option>
   </select>
 
-  <label>Eyelets per piece:(NUMBER OF EYELETS ON ONE WHOLE SHEET)</label>
-  <input type="number" id="eyelets - ₹1" value="1" min="0">
+  <label>Dye Charges (₹):</label>
+  <input type="number" id="dyeCharges" value="0">
+
+  <label>Eyelets per piece:</label>
+  <input type="number" id="eyelets" value="0" min="0">
 
   <label>UV:</label>
   <select id="uv">
@@ -109,6 +115,9 @@
     <option value="5">5%</option>
     <option value="18">18%</option>
   </select>
+
+  <label>Remark:</label>
+  <textarea id="remark" placeholder="Enter remark"></textarea>
 
   <!-- Action Buttons -->
   <button id="calcBtn">Calculate</button>
