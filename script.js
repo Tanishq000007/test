@@ -39,7 +39,9 @@ function calculateQuotation() {
   const foilCost = foilRate * quantity;
 
   const subtotal = materialCost + printingCost + laminationCost + cuttingCost + eyeletsCost + uvCost + foilCost;
-  const additionalCharges = designing + dyeChargesCost ;
+  
+  // Fixed: dyeChargesCost replaced with dyeCharges
+  const additionalCharges = designing + dyeCharges; 
   const totalAfterDiscount = subtotal - discount + additionalCharges;
   const gstAmount = (gstPercent / 100) * totalAfterDiscount;
   const totalAmount = totalAfterDiscount + gstAmount;
@@ -69,13 +71,13 @@ function calculateQuotation() {
           <tr><td>Printing (${document.getElementById("printingType").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${printingCost.toFixed(2)}</td></tr>
           <tr><td>Lamination (${document.getElementById("lamination").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${laminationCost.toFixed(2)}</td></tr>
           <tr><td>Cutting (${document.getElementById("cutting").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${cuttingCost.toFixed(2)}</td></tr>
-          <tr><td>Dye Charges</td><td style="text-align:right;">${rupee}${dyeChargesCost.toFixed(2)}</td></tr>
+          <tr><td>Dye Charges</td><td style="text-align:right;">${rupee}${dyeCharges.toFixed(2)}</td></tr>
           <tr><td>Eyelets (${eyeletsCount})</td><td style="text-align:right;">${rupee}${eyeletsCost.toFixed(2)}</td></tr>
           <tr><td>UV (${document.getElementById("uv").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${uvCost.toFixed(2)}</td></tr>
           <tr><td>Foil (${document.getElementById("foil").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${foilCost.toFixed(2)}</td></tr>
           <tr><td>Subtotal</td><td style="text-align:right;">${rupee}${subtotal.toFixed(2)}</td></tr>
           <tr><td>Discount</td><td style="text-align:right;">-${rupee}${discount.toFixed(2)}</td></tr>
-          <tr><td>Additional Charges (Designing)</td><td style="text-align:right;">${rupee}${additionalCharges.toFixed(2)}</td></tr>
+          <tr><td>Additional Charges (Designing + Dye)</td><td style="text-align:right;">${rupee}${additionalCharges.toFixed(2)}</td></tr>
           <tr><td>GST (${gstPercent}%)</td><td style="text-align:right;">${rupee}${gstAmount.toFixed(2)}</td></tr>
           <tr><td><strong>Total</strong></td><td style="text-align:right;"><strong>${rupee}${totalAmount.toFixed(2)}</strong></td></tr>
         </tbody>
