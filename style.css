@@ -4,16 +4,14 @@ body {
   margin: 0;
   padding: 0;
 }
-
 .container {
-  max-width: 600px;
+  max-width: 650px;
   margin: 40px auto;
   background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-
 input, select, textarea, button {
   width: 100%;
   margin-top: 5px;
@@ -21,53 +19,30 @@ input, select, textarea, button {
   padding: 8px;
   border-radius: 5px;
   border: 1px solid #ccc;
-  font-size: 16px;
 }
-
 button {
   background: #007bff;
   color: white;
   cursor: pointer;
   border: none;
   padding: 10px;
-  font-size: 16px;
+  border-radius: 5px;
 }
-
 button:hover {
   opacity: 0.9;
 }
-
 .quotation {
   margin-top: 20px;
   padding: 15px;
   border: 1px solid #ddd;
   background: #fafafa;
 }
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid #333;
-  padding: 8px;
-  text-align: left;
-}
-
 .footer {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
   font-size: 14px;
 }
-
-.signature {
-  text-align: right;
-  margin-top: 30px;
-  font-weight: bold;
-}
-
 @media print {
   body * {
     visibility: hidden;
