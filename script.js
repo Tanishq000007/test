@@ -16,7 +16,7 @@ function calculateQuotation() {
   const cuttingRate = parseFloat(document.getElementById("cutting").value);
   const dyeCharges = parseFloat(document.getElementById("dyeCharges").value) || 0; // per job
   const eyeletsCount = parseInt(document.getElementById("eyelets").value) || 0;
-  const eyeletRate = 5; // ₹5 per eyelet
+  const eyeletRate = 1; // ₹1 per eyelet
   const uvRate = parseFloat(document.getElementById("uv").value);
   const foilRate = parseFloat(document.getElementById("foil").value);
   const designing = parseFloat(document.getElementById("designing").value) || 0;
@@ -34,13 +34,12 @@ function calculateQuotation() {
   const printingCost = printingRate * quantity;
   const laminationCost = laminationRate * quantity;
   const cuttingCost = cuttingRate * quantity;
-  const dyeChargesCost = dyeCharges; // flat, per job
   const eyeletsCost = eyeletsCount * eyeletRate * quantity;
   const uvCost = uvRate * quantity;
   const foilCost = foilRate * quantity;
 
-  const subtotal = materialCost + printingCost + laminationCost + cuttingCost + dyeChargesCost + eyeletsCost + uvCost + foilCost;
-  const additionalCharges = designing;
+  const subtotal = materialCost + printingCost + laminationCost + cuttingCost + eyeletsCost + uvCost + foilCost;
+  const additionalCharges = designing + dyeChargesCost ;
   const totalAfterDiscount = subtotal - discount + additionalCharges;
   const gstAmount = (gstPercent / 100) * totalAfterDiscount;
   const totalAmount = totalAfterDiscount + gstAmount;
