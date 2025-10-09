@@ -14,8 +14,9 @@ function calculateQuotation() {
   const printingRate = parseFloat(document.getElementById("printingType").value);
   const laminationRate = parseFloat(document.getElementById("lamination").value);
   const cuttingRate = parseFloat(document.getElementById("cutting").value);
-  const dyeCharges = parseFloat(document.getElementById("dyeCharges").value) || 0;
+  const dyeCharges = parseFloat(document.getElementById("dyeCharges").value) || 0; // per job
   const eyeletsCount = parseInt(document.getElementById("eyelets").value) || 0;
+  const eyeletRate = 5; // ₹5 per eyelet
   const uvRate = parseFloat(document.getElementById("uv").value);
   const foilRate = parseFloat(document.getElementById("foil").value);
   const designing = parseFloat(document.getElementById("designing").value) || 0;
@@ -28,22 +29,21 @@ function calculateQuotation() {
     return;
   }
 
-  // Costs multiplied by quantity
+  // Calculate costs
   const materialCost = paperRate * quantity;
   const printingCost = printingRate * quantity;
   const laminationCost = laminationRate * quantity;
   const cuttingCost = cuttingRate * quantity;
-  const dyeChargesCost = dyeCharges * quantity;
-  const eyeletsCost = eyeletsCount * 5 * quantity; // ₹5 per eyelet
+  const dyeChargesCost = dyeCharges; // flat, per job
+  const eyeletsCost = eyeletsCount * eyeletRate * quantity;
   const uvCost = uvRate * quantity;
   const foilCost = foilRate * quantity;
 
   const subtotal = materialCost + printingCost + laminationCost + cuttingCost + dyeChargesCost + eyeletsCost + uvCost + foilCost;
-  const additionalCharges = designing + 0; // designing included as additional
+  const additionalCharges = designing;
   const totalAfterDiscount = subtotal - discount + additionalCharges;
   const gstAmount = (gstPercent / 100) * totalAfterDiscount;
   const totalAmount = totalAfterDiscount + gstAmount;
-
   const rupee = "₹";
 
   const quoteHTML = `
@@ -59,33 +59,32 @@ function calculateQuotation() {
       <p><strong>Quantity:</strong> ${quantity}</p>
 
       <table style="width:100%; border-collapse: collapse; margin-top:10px;">
-  <thead>
-    <tr style="background:#007bff; color:#fff;">
-      <th style="text-align:left; padding:8px;">Description</th>
-      <th style="text-align:right; padding:8px;">Cost (${rupee})</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr><td>Paper (${document.getElementById("paperType").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${materialCost.toFixed(2)}</td></tr>
-    <tr><td>Printing (${document.getElementById("printingType").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${printingCost.toFixed(2)}</td></tr>
-    <tr><td>Lamination (${document.getElementById("lamination").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${laminationCost.toFixed(2)}</td></tr>
-    <tr><td>Cutting (${document.getElementById("cutting").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${cuttingCost.toFixed(2)}</td></tr>
-    <tr><td>Dye Charges</td><td style="text-align:right;">${rupee}${dyeChargesCost.toFixed(2)}</td></tr>
-    <tr><td>Eyelets (${eyeletsCount})</td><td style="text-align:right;">${rupee}${eyeletsCost.toFixed(2)}</td></tr>
-    <tr><td>UV (${document.getElementById("uv").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${uvCost.toFixed(2)}</td></tr>
-    <tr><td>Foil (${document.getElementById("foil").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${foilCost.toFixed(2)}</td></tr>
-    <tr><td>Subtotal</td><td style="text-align:right;">${rupee}${subtotal.toFixed(2)}</td></tr>
-    <tr><td>Discount</td><td style="text-align:right;">-${rupee}${discount.toFixed(2)}</td></tr>
-    <tr><td>Additional Charges (Designing + Dye)</td><td style="text-align:right;">${rupee}${additionalCharges.toFixed(2)}</td></tr>
-    <tr><td>GST (${gstPercent}%)</td><td style="text-align:right;">${rupee}${gstAmount.toFixed(2)}</td></tr>
-    <tr><td><strong>Total</strong></td><td style="text-align:right;"><strong>${rupee}${totalAmount.toFixed(2)}</strong></td></tr>
-  </tbody>
-</table>
-
+        <thead>
+          <tr style="background:#007bff; color:#fff;">
+            <th style="text-align:left; padding:8px;">Description</th>
+            <th style="text-align:right; padding:8px;">Cost (${rupee})</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Paper (${document.getElementById("paperType").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${materialCost.toFixed(2)}</td></tr>
+          <tr><td>Printing (${document.getElementById("printingType").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${printingCost.toFixed(2)}</td></tr>
+          <tr><td>Lamination (${document.getElementById("lamination").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${laminationCost.toFixed(2)}</td></tr>
+          <tr><td>Cutting (${document.getElementById("cutting").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${cuttingCost.toFixed(2)}</td></tr>
+          <tr><td>Dye Charges</td><td style="text-align:right;">${rupee}${dyeChargesCost.toFixed(2)}</td></tr>
+          <tr><td>Eyelets (${eyeletsCount})</td><td style="text-align:right;">${rupee}${eyeletsCost.toFixed(2)}</td></tr>
+          <tr><td>UV (${document.getElementById("uv").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${uvCost.toFixed(2)}</td></tr>
+          <tr><td>Foil (${document.getElementById("foil").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${foilCost.toFixed(2)}</td></tr>
+          <tr><td>Subtotal</td><td style="text-align:right;">${rupee}${subtotal.toFixed(2)}</td></tr>
+          <tr><td>Discount</td><td style="text-align:right;">-${rupee}${discount.toFixed(2)}</td></tr>
+          <tr><td>Additional Charges (Designing)</td><td style="text-align:right;">${rupee}${additionalCharges.toFixed(2)}</td></tr>
+          <tr><td>GST (${gstPercent}%)</td><td style="text-align:right;">${rupee}${gstAmount.toFixed(2)}</td></tr>
+          <tr><td><strong>Total</strong></td><td style="text-align:right;"><strong>${rupee}${totalAmount.toFixed(2)}</strong></td></tr>
+        </tbody>
+      </table>
 
       ${remark ? `<p><strong>Remark:</strong> ${remark}</p>` : ''}
 
-      <div class="footer">
+      <div class="footer" style="margin-top:20px; display:flex; justify-content:space-between;">
         <div>
           <strong>Contact:</strong><br>
           9368885855, 9359995855<br>
@@ -113,7 +112,10 @@ function printQuotation() {
         <style>
           body { font-family: Arial; padding:20px; }
           table { width:100%; border-collapse: collapse; }
-          th, td { border:1px solid #333; padding:6px; text-align:left; }
+          th, td { border:1px solid #333; padding:6px; }
+          th { background:#007bff; color:#fff; }
+          td { text-align:right; }
+          td:first-child { text-align:left; }
         </style>
       </head>
       <body>${quote.innerHTML}</body>
