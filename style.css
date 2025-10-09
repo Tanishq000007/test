@@ -1,114 +1,53 @@
-/* General Styles */
+
+
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  background: #f3f4f6;
+  margin: 0;
+  padding: 0;
 }
-
-.calculator-container {
-    width: 80%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+input, select, textarea, button {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
-
-header .logo {
-    width: 100px;
+button {
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  border: none;
 }
-
-header h1 {
-    font-size: 24px;
-    color: #333;
+button:hover {
+  opacity: 0.9;
 }
-
-.calculator-form label {
-    display: block;
-    margin-top: 10px;
-    font-weight: bold;
-}
-
-.calculator-form input,
-.calculator-form select,
-.calculator-form button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-}
-
-.calculator-form button {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-}
-
-.calculator-form button:hover {
-    background-color: #45a049;
-}
-
-/* Quotation Section */
 .quotation {
-    margin-top: 30px;
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  background: #fafafa;
 }
-
-.quotation-header h2 {
-    font-size: 22px;
-    color: #333;
-}
-
-.quotation-header p {
-    font-size: 16px;
-    color: #555;
-}
-
-#quotationTable {
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #quotation, #quotation * {
+    visibility: visible;
+  }
+  #quotation {
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-#quotationTable th,
-#quotationTable td {
-    padding: 10px;
-    text-align: center;
-    border: 1px solid #ddd;
-}
-
-.quotation-footer {
-    margin-top: 20px;
-    text-align: right;
-}
-
-.quotation-footer p {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-}
-
-/* Footer */
-.footer {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 40px;
-    font-size: 14px;
-    color: #777;
-}
-
-.footer-left,
-.footer-center,
-.footer-right {
-    width: 30%;
+  }
 }
