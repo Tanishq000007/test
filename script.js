@@ -58,22 +58,30 @@ function calculateQuotation() {
       <p><strong>Date:</strong> ${date}</p>
       <p><strong>Quantity:</strong> ${quantity}</p>
 
-      <table>
-        <tr><th>Description</th><th>Cost (${rupee})</th></tr>
-        <tr><td>Paper (${document.getElementById("paperType").selectedOptions[0].text})</td><td>${rupee}${materialCost.toFixed(2)}</td></tr>
-        <tr><td>Printing (${document.getElementById("printingType").selectedOptions[0].text})</td><td>${rupee}${printingCost.toFixed(2)}</td></tr>
-        <tr><td>Lamination (${document.getElementById("lamination").selectedOptions[0].text})</td><td>${rupee}${laminationCost.toFixed(2)}</td></tr>
-        <tr><td>Cutting (${document.getElementById("cutting").selectedOptions[0].text})</td><td>${rupee}${cuttingCost.toFixed(2)}</td></tr>
-        <tr><td>Dye Charges</td><td>${rupee}${dyeChargesCost.toFixed(2)}</td></tr>
-        <tr><td>Eyelets (${eyeletsCount})</td><td>${rupee}${eyeletsCost.toFixed(2)}</td></tr>
-        <tr><td>UV (${document.getElementById("uv").selectedOptions[0].text})</td><td>${rupee}${uvCost.toFixed(2)}</td></tr>
-        <tr><td>Foil (${document.getElementById("foil").selectedOptions[0].text})</td><td>${rupee}${foilCost.toFixed(2)}</td></tr>
-        <tr><td>Subtotal</td><td>${rupee}${subtotal.toFixed(2)}</td></tr>
-        <tr><td>Discount</td><td>-${rupee}${discount.toFixed(2)}</td></tr>
-        <tr><td>Additional Charges (Designing + Dye)</td><td>${rupee}${additionalCharges.toFixed(2)}</td></tr>
-        <tr><td>GST (${gstPercent}%)</td><td>${rupee}${gstAmount.toFixed(2)}</td></tr>
-        <tr><td><strong>Total</strong></td><td><strong>${rupee}${totalAmount.toFixed(2)}</strong></td></tr>
-      </table>
+      <table style="width:100%; border-collapse: collapse; margin-top:10px;">
+  <thead>
+    <tr style="background:#007bff; color:#fff;">
+      <th style="text-align:left; padding:8px;">Description</th>
+      <th style="text-align:right; padding:8px;">Cost (${rupee})</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Paper (${document.getElementById("paperType").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${materialCost.toFixed(2)}</td></tr>
+    <tr><td>Printing (${document.getElementById("printingType").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${printingCost.toFixed(2)}</td></tr>
+    <tr><td>Lamination (${document.getElementById("lamination").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${laminationCost.toFixed(2)}</td></tr>
+    <tr><td>Cutting (${document.getElementById("cutting").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${cuttingCost.toFixed(2)}</td></tr>
+    <tr><td>Dye Charges</td><td style="text-align:right;">${rupee}${dyeChargesCost.toFixed(2)}</td></tr>
+    <tr><td>Eyelets (${eyeletsCount})</td><td style="text-align:right;">${rupee}${eyeletsCost.toFixed(2)}</td></tr>
+    <tr><td>UV (${document.getElementById("uv").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${uvCost.toFixed(2)}</td></tr>
+    <tr><td>Foil (${document.getElementById("foil").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${foilCost.toFixed(2)}</td></tr>
+    <tr><td>Subtotal</td><td style="text-align:right;">${rupee}${subtotal.toFixed(2)}</td></tr>
+    <tr><td>Discount</td><td style="text-align:right;">-${rupee}${discount.toFixed(2)}</td></tr>
+    <tr><td>Additional Charges (Designing + Dye)</td><td style="text-align:right;">${rupee}${additionalCharges.toFixed(2)}</td></tr>
+    <tr><td>GST (${gstPercent}%)</td><td style="text-align:right;">${rupee}${gstAmount.toFixed(2)}</td></tr>
+    <tr><td><strong>Total</strong></td><td style="text-align:right;"><strong>${rupee}${totalAmount.toFixed(2)}</strong></td></tr>
+  </tbody>
+</table>
+
 
       ${remark ? `<p><strong>Remark:</strong> ${remark}</p>` : ''}
 
