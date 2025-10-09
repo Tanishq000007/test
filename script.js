@@ -14,11 +14,11 @@ function calculateQuotation() {
   const printingRate = parseFloat(document.getElementById("printingType").value);
   const laminationRate = parseFloat(document.getElementById("lamination").value);
   const cuttingRate = parseFloat(document.getElementById("cutting").value);
+  const dyeCharges = parseFloat(document.getElementById("dyeCharges").value) || 0;
   const eyeletsCount = parseInt(document.getElementById("eyelets").value) || 0;
   const uvRate = parseFloat(document.getElementById("uv").value);
   const foilRate = parseFloat(document.getElementById("foil").value);
-  const dyeCharges = parseFloat(document.getElementById("dyeCharges").value) || 0;
-  const designingCharges = parseFloat(document.getElementById("designing").value) || 0;
+  const designing = parseFloat(document.getElementById("designing").value) || 0;
   const discount = parseFloat(document.getElementById("discount").value) || 0;
   const gstPercent = parseFloat(document.getElementById("gst").value) || 0;
   const remark = document.getElementById("remark").value;
@@ -28,18 +28,18 @@ function calculateQuotation() {
     return;
   }
 
-  // Per piece calculation
-  const eyeletRate = 5; // placeholder
+  // Costs multiplied by quantity
   const materialCost = paperRate * quantity;
   const printingCost = printingRate * quantity;
   const laminationCost = laminationRate * quantity;
   const cuttingCost = cuttingRate * quantity;
-  const eyeletsCost = eyeletsCount * eyeletRate * quantity;
+  const dyeChargesCost = dyeCharges * quantity;
+  const eyeletsCost = eyeletsCount * 5 * quantity; // ₹5 per eyelet
   const uvCost = uvRate * quantity;
   const foilCost = foilRate * quantity;
 
-  const subtotal = materialCost + printingCost + laminationCost + cuttingCost + eyeletsCost + uvCost + foilCost;
-  const additionalCharges = dyeCharges + designingCharges;
+  const subtotal = materialCost + printingCost + laminationCost + cuttingCost + dyeChargesCost + eyeletsCost + uvCost + foilCost;
+  const additionalCharges = designing + 0; // designing included as additional
   const totalAfterDiscount = subtotal - discount + additionalCharges;
   const gstAmount = (gstPercent / 100) * totalAfterDiscount;
   const totalAmount = totalAfterDiscount + gstAmount;
@@ -64,7 +64,7 @@ function calculateQuotation() {
         <tr><td>Printing (${document.getElementById("printingType").selectedOptions[0].text})</td><td>${rupee}${printingCost.toFixed(2)}</td></tr>
         <tr><td>Lamination (${document.getElementById("lamination").selectedOptions[0].text})</td><td>${rupee}${laminationCost.toFixed(2)}</td></tr>
         <tr><td>Cutting (${document.getElementById("cutting").selectedOptions[0].text})</td><td>${rupee}${cuttingCost.toFixed(2)}</td></tr>
-        <tr><td>Dye Charges</td><td>${rupee}${dyeCharges.toFixed(2)}</td></tr>
+        <tr><td>Dye Charges</td><td>${rupee}${dyeChargesCost.toFixed(2)}</td></tr>
         <tr><td>Eyelets (${eyeletsCount})</td><td>${rupee}${eyeletsCost.toFixed(2)}</td></tr>
         <tr><td>UV (${document.getElementById("uv").selectedOptions[0].text})</td><td>${rupee}${uvCost.toFixed(2)}</td></tr>
         <tr><td>Foil (${document.getElementById("foil").selectedOptions[0].text})</td><td>${rupee}${foilCost.toFixed(2)}</td></tr>
