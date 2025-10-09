@@ -20,7 +20,7 @@
   <input type="text" id="customerName">
 
   <label>Contact Number:</label>
-  <input type="tel" id="customerContact" placeholder="Enter contact number">
+  <input type="tel" id="customerContact">
 
   <label>Quotation Date:</label>
   <input type="date" id="quoteDate">
@@ -28,41 +28,70 @@
   <!-- Job Details -->
   <label>Paper Type:</label>
   <select id="paperType">
-    <option value="100">Paper Type A - ₹100/sq.ft</option>
-    <option value="150">Paper Type B - ₹150/sq.ft</option>
+    <option value="0">NONE</option>
+    <option value="1">100 GSM MAPHLITO PAPER - ₹1</option>
+    <option value="2">120 GSM ART PAPER - ₹2</option>
+    <option value="3">170 GSM ART PAPER - ₹3</option>
+    <option value="4">250 GSM ART PAPER - ₹4</option>
+    <option value="5">300 GSM ART PAPER - ₹5</option>
+    <option value="6">350 GSM ART PAPER - ₹6</option>
+    <option value="7">220 GSM SBS - ₹7</option>
+    <option value="8">170 GSM NON TEARABLE - ₹8 </option>
+    <option value="9">300 GSM WHITE TEXTURE - ₹9</option>
+    <option value="10">100 GSM WHITE TEXTURE - ₹10</option>
+    <option value="11">300 GSM YELLOW TEXTURE - ₹11</option>
+    <option value="12">100 GSM YELLOW TEXTURE - ₹12</option>
+    <option value="13">300 GSM WHITE METALLIC - ₹13</option>
+    <option value="14">300 GSM YELLOW METALLIC - ₹14</option>
+    <option value="15">STICKER - ₹15</option>
+    <option value="16">GLOSS VINYLE - ₹16</option>
+    <option value="17">MATTE VINYLE - ₹17</option>
+    <option value="18">TRANSPARENT - ₹18</option>
+    <option value="19">MATTE SILVER STICKER - ₹19</option>
+    <option value="20">GLOSS SILVER STICKER - ₹20</option>
+    <option value="21">MATTE GOLD STICKER - ₹21</option>
   </select>
 
   <label>Printing Type:</label>
   <select id="printingType">
-    <option value="50">Printing Type A - ₹50/sq.ft</option>
-    <option value="80">Printing Type B - ₹80/sq.ft</option>
+    <option value="1">FULL COLOUR ONE SIDE - ₹1</option>
+    <option value="2">FULL COLOUR BOTH SIDE - ₹2</option>
+    <option value="3">BLACK AND WHITE ONE SIDE - ₹3</option>
+    <option value="4">BLACK AND WHITE BOTH SIDE - ₹4</option>
+    <option value="5">FULL COLOUR AND BLACK AND WHITE - ₹5</option>
   </select>
 
   <label>Lamination:</label>
   <select id="lamination">
-    <option value="20">Lamination A - ₹20/sq.ft</option>
-    <option value="30">Lamination B - ₹30/sq.ft</option>
+    <option value="1">GLOSS - ₹1</option>
+    <option value="2">MATTE - ₹2</option>
+    <option value="3">VELVET - ₹3</option>
+    <option value="4">HOLOGRAPHIC - ₹4</option>
   </select>
 
   <label>Cutting:</label>
   <select id="cutting">
-    <option value="10">Cutting A - ₹10/sq.ft</option>
-    <option value="15">Cutting B - ₹15/sq.ft</option>
+    <option value="1">FULL STRAIGHT - ₹1</option>
+    <option value="2">FULL DYE CUTTING - ₹2</option>
+    <option value="3">HALF STRAIGHT - ₹3</option>
+    <option value="4">HALF DYE CUTTING - ₹4</option>
   </select>
 
-  <label>Eyelets per piece:</label>
-  <input type="number" id="eyelets" value="0" min="0">
+  <label>Eyelets per piece:(NUMBER OF EYELETS ON ONE WHOLE SHEET)</label>
+  <input type="number" id="eyelets - ₹1" value="1" min="0">
 
   <label>UV:</label>
   <select id="uv">
-    <option value="0">UV A - ₹0</option>
-    <option value="50">UV B - ₹50/sq.ft</option>
+    <option value="0">NONE</option>
+    <option value="1">ONE SIDE - ₹1</option>
+    <option value="2">BOTH SIDE - ₹2</option>
   </select>
 
   <label>Foil:</label>
   <select id="foil">
-    <option value="0">Foil A - ₹0</option>
-    <option value="100">Foil B - ₹100/sq.ft</option>
+    <option value="0">NONE</option>
+    <option value="1">ONE SIDE - ₹1</option>
+    <option value="2">BOTH SIDE - ₹2</option>
   </select>
 
   <label>Designing Charges (₹):</label>
