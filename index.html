@@ -1,142 +1,139 @@
-document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("calcBtn").addEventListener("click", calculateQuotation);
-  document.getElementById("printBtn").addEventListener("click", printQuotation);
-  document.getElementById("pdfBtn").addEventListener("click", downloadPDF);
-});
 
-function calculateQuotation() {
-  const name = document.getElementById("customerName").value.trim();
-  const contact = document.getElementById("customerContact").value.trim();
-  const date = document.getElementById("quoteDate").value;
-  const quantity = parseInt(document.getElementById("quantity").value) || 1;
 
-  const paperRate = parseFloat(document.getElementById("paperType").value);
-  const printingRate = parseFloat(document.getElementById("printingType").value);
-  const laminationRate = parseFloat(document.getElementById("lamination").value);
-  const cuttingRate = parseFloat(document.getElementById("cutting").value);
-  const dyeCharges = parseFloat(document.getElementById("dyeCharges").value) || 0; // per job
-  const eyeletsCount = parseInt(document.getElementById("eyelets").value) || 0;
-  const eyeletRate = 1; // ₹1 per eyelet
-  const uvRate = parseFloat(document.getElementById("uv").value);
-  const foilRate = parseFloat(document.getElementById("foil").value);
-  const designing = parseFloat(document.getElementById("designing").value) || 0;
-  const discount = parseFloat(document.getElementById("discount").value) || 0;
-  const gstPercent = parseFloat(document.getElementById("gst").value) || 0;
-  const remark = document.getElementById("remark").value;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Printing Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
 
-  if (!name || !date) {
-    alert("Please fill all required fields!");
-    return;
-  }
+  <!-- Header with logo -->
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+    <h1>Digital Printing Calculator</h1>
+    <img src="logo.png" alt="Logo" style="width:100px; height:auto;">
+  </div>
 
-  // Calculate costs
-  const materialCost = paperRate * quantity;
-  const printingCost = printingRate * quantity;
-  const laminationCost = laminationRate * quantity;
-  const cuttingCost = cuttingRate * quantity;
-  const eyeletsCost = eyeletsCount * eyeletRate * quantity;
-  const uvCost = uvRate * quantity;
-  const foilCost = foilRate * quantity;
+  <!-- Customer Details -->
+  <label>Customer Name:</label>
+  <input type="text" id="customerName">
 
-  const subtotal = materialCost + printingCost + laminationCost + cuttingCost + eyeletsCost + uvCost + foilCost;
-  
-  // Fixed: dyeChargesCost replaced with dyeCharges
-  const additionalCharges = designing + dyeCharges; 
-  const totalAfterDiscount = subtotal - discount + additionalCharges;
-  const gstAmount = (gstPercent / 100) * totalAfterDiscount;
-  const totalAmount = totalAfterDiscount + gstAmount;
-  const rupee = "₹";
+  <label>Contact Number:</label>
+  <input type="tel" id="customerContact">
 
-  const quoteHTML = `
-    <div>
-      <div style="display:flex; justify-content:space-between; align-items:center;">
-        <h2>Quotation</h2>
-        <img src="logo.png" alt="Logo" style="width:100px;">
-      </div>
+  <label>Quotation Date:</label>
+  <input type="date" id="quoteDate">
 
-      <p><strong>Customer:</strong> ${name}</p>
-      <p><strong>Contact:</strong> ${contact || "N/A"}</p>
-      <p><strong>Date:</strong> ${date}</p>
-      <p><strong>Quantity:</strong> ${quantity}</p>
+  <label>Quantity:</label>
+  <input type="number" id="quantity" value="1" min="1">
 
-      <table style="width:100%; border-collapse: collapse; margin-top:10px;">
-        <thead>
-          <tr style="background:#007bff; color:#fff;">
-            <th style="text-align:left; padding:8px;">Description</th>
-            <th style="text-align:right; padding:8px;">Cost (${rupee})</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Paper (${document.getElementById("paperType").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${materialCost.toFixed(2)}</td></tr>
-          <tr><td>Printing (${document.getElementById("printingType").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${printingCost.toFixed(2)}</td></tr>
-          <tr><td>Lamination (${document.getElementById("lamination").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${laminationCost.toFixed(2)}</td></tr>
-          <tr><td>Cutting (${document.getElementById("cutting").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${cuttingCost.toFixed(2)}</td></tr>
-          <tr><td>Dye Charges</td><td style="text-align:right;">${rupee}${dyeCharges.toFixed(2)}</td></tr>
-          <tr><td>Eyelets (${eyeletsCount})</td><td style="text-align:right;">${rupee}${eyeletsCost.toFixed(2)}</td></tr>
-          <tr><td>UV (${document.getElementById("uv").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${uvCost.toFixed(2)}</td></tr>
-          <tr><td>Foil (${document.getElementById("foil").selectedOptions[0].text})</td><td style="text-align:right;">${rupee}${foilCost.toFixed(2)}</td></tr>
-          <tr><td>Subtotal</td><td style="text-align:right;">${rupee}${subtotal.toFixed(2)}</td></tr>
-          <tr><td>Discount</td><td style="text-align:right;">-${rupee}${discount.toFixed(2)}</td></tr>
-          <tr><td>Additional Charges (Designing + Dye)</td><td style="text-align:right;">${rupee}${additionalCharges.toFixed(2)}</td></tr>
-          <tr><td>GST (${gstPercent}%)</td><td style="text-align:right;">${rupee}${gstAmount.toFixed(2)}</td></tr>
-          <tr><td><strong>Total</strong></td><td style="text-align:right;"><strong>${rupee}${totalAmount.toFixed(2)}</strong></td></tr>
-        </tbody>
-      </table>
+  <!-- Job Details -->
+  <label>Paper Type:</label>
+  <select id="paperType">
+    <option value="0">NONE</option>
+    <option value="1">100 GSM MAPHLITO PAPER - ₹1</option>
+    <option value="2">120 GSM ART PAPER - ₹2</option>
+    <option value="3">170 GSM ART PAPER - ₹3</option>
+    <option value="4">250 GSM ART PAPER - ₹4</option>
+    <option value="5">300 GSM ART PAPER - ₹5</option>
+    <option value="6">350 GSM ART PAPER - ₹6</option>
+    <option value="7">220 GSM SBS - ₹7</option>
+    <option value="8">170 GSM NON TEARABLE - ₹8 </option>
+    <option value="9">300 GSM WHITE TEXTURE - ₹9</option>
+    <option value="10">100 GSM WHITE TEXTURE - ₹10</option>
+    <option value="11">300 GSM YELLOW TEXTURE - ₹11</option>
+    <option value="12">100 GSM YELLOW TEXTURE - ₹12</option>
+    <option value="13">300 GSM WHITE METALLIC - ₹13</option>
+    <option value="14">300 GSM YELLOW METALLIC - ₹14</option>
+    <option value="15">STICKER - ₹15</option>
+    <option value="16">GLOSS VINYLE - ₹16</option>
+    <option value="17">MATTE VINYLE - ₹17</option>
+    <option value="18">TRANSPARENT - ₹18</option>
+    <option value="19">MATTE SILVER STICKER - ₹19</option>
+    <option value="20">GLOSS SILVER STICKER - ₹20</option>
+    <option value="21">MATTE GOLD STICKER - ₹21</option>
+  </select>
 
-      ${remark ? `<p><strong>Remark:</strong> ${remark}</p>` : ''}
+  <label>Printing Type:</label>
+  <select id="printingType">
+    <option value="0">NONE</option>
+    <option value="1">FULL COLOUR ONE SIDE - ₹1</option>
+    <option value="2">FULL COLOUR BOTH SIDE - ₹2</option>
+    <option value="3">BLACK AND WHITE ONE SIDE - ₹3</option>
+    <option value="4">BLACK AND WHITE BOTH SIDE - ₹4</option>
+    <option value="5">FULL COLOUR AND BLACK AND WHITE - ₹5</option>
+  </select>
 
-      <div class="footer" style="margin-top:20px; display:flex; justify-content:space-between;">
-        <div>
-          <strong>Contact:</strong><br>
-          9368885855, 9359995855<br>
-          vimalpress@gmail.com<br>
-          vimalpress.com
-        </div>
-        <div style="text-align:right;">
-          <p>Signature</p>
-        </div>
-      </div>
-    </div>
-  `;
+  <label>Lamination:</label>
+  <select id="lamination">
+    <option value="0">NONE</option>
+    <option value="1">GLOSS - ₹1</option>
+    <option value="2">MATTE - ₹2</option>
+    <option value="3">VELVET - ₹3</option>
+    <option value="4">HOLOGRAPHIC - ₹4</option>
+  </select>
 
-  document.getElementById("quotation").innerHTML = quoteHTML;
-}
+  <label>Cutting:</label>
+  <select id="cutting">
+    <option value="0">NONE</option>
+    <option value="1">FULL STRAIGHT - ₹1</option>
+    <option value="2">FULL DYE CUTTING - ₹2</option>
+    <option value="3">HALF STRAIGHT - ₹3</option>
+    <option value="4">HALF DYE CUTTING - ₹4</option>
+  </select>
 
-function printQuotation() {
-  const quote = document.getElementById("quotation");
-  if (!quote.innerHTML.trim()) return alert("Please generate the quotation first!");
-  const printWindow = window.open("", "_blank");
-  printWindow.document.write(`
-    <html>
-      <head>
-        <title>Quotation</title>
-        <style>
-          body { font-family: Arial; padding:20px; }
-          table { width:100%; border-collapse: collapse; }
-          th, td { border:1px solid #333; padding:6px; }
-          th { background:#007bff; color:#fff; }
-          td { text-align:right; }
-          td:first-child { text-align:left; }
-        </style>
-      </head>
-      <body>${quote.innerHTML}</body>
-    </html>
-  `);
-  printWindow.document.close();
-  printWindow.print();
-}
+  <label>Dye Charges (₹):</label>
+  <input type="number" id="dyeCharges" value="0">
 
-async function downloadPDF() {
-  const { jsPDF } = window.jspdf;
-  const content = document.getElementById("quotation");
-  if (!content.innerHTML.trim()) return alert("Please generate the quotation first!");
-  const canvas = await html2canvas(content, { scale:2, useCORS:true });
-  const imgData = canvas.toDataURL("image/png");
-  const pdf = new jsPDF("p", "mm", "a4");
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const imgWidth = pageWidth - 20;
-  const imgHeight = (canvas.height * imgWidth) / canvas.width;
-  pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
-  const name = document.getElementById("customerName").value || "Quotation";
-  pdf.save(`${name}_Quotation.pdf`);
-}
+  <label>Eyelets per piece:</label>
+  <input type="number" id="eyelets" value="0" min="0">
+
+  <label>UV:</label>
+  <select id="uv">
+    <option value="0">NONE</option>
+    <option value="1">ONE SIDE - ₹1</option>
+    <option value="2">BOTH SIDE - ₹2</option>
+  </select>
+
+  <label>Foil:</label>
+  <select id="foil">
+    <option value="0">NONE</option>
+    <option value="1">ONE SIDE - ₹1</option>
+    <option value="2">BOTH SIDE - ₹2</option>
+  </select>
+
+  <label>Designing Charges (₹):</label>
+  <input type="number" id="designing" value="0">
+
+  <label>Discount (₹):</label>
+  <input type="number" id="discount" value="0">
+
+  <label>GST:</label>
+  <select id="gst">
+    <option value="0">0%</option>
+    <option value="5">5%</option>
+    <option value="18">18%</option>
+  </select>
+
+  <label>Remark:</label>
+  <textarea id="remark" placeholder="Enter remark"></textarea>
+
+  <!-- Action Buttons -->
+  <button id="calcBtn">Calculate</button>
+  <button id="printBtn" style="background:green;">Print</button>
+  <button id="pdfBtn" style="background:darkred;">Download PDF</button>
+
+  <!-- Quotation Preview -->
+  <div id="quotation" class="quotation"></div>
+
+</div>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
