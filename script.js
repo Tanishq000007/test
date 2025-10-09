@@ -8,83 +8,79 @@ function calculateQuotation() {
   const name = document.getElementById("customerName").value.trim();
   const contact = document.getElementById("customerContact").value.trim();
   const date = document.getElementById("quoteDate").value;
-  const width = parseFloat(document.getElementById("width").value) || 0;
-  const height = parseFloat(document.getElementById("height").value) || 0;
-  const quantity = parseInt(document.getElementById("quantity").value) || 1;
+  const paperRate = parseFloat(document.getElementById("paperType").value);
+  const printingRate = parseFloat(document.getElementById("printingType").value);
+  const laminationRate = parseFloat(document.getElementById("lamination").value);
+  const cuttingRate = parseFloat(document.getElementById("cutting").value);
+  const eyeletsCount = parseInt(document.getElementById("eyelets").value) || 0;
+  const uvRate = parseFloat(document.getElementById("uv").value);
+  const foilRate = parseFloat(document.getElementById("foil").value);
+  const designing = parseFloat(document.getElementById("designing").value) || 0;
+  const discount = parseFloat(document.getElementById("discount").value) || 0;
+  const gstPercent = parseFloat(document.getElementById("gst").value) || 0;
 
-  if (!name || !date || width <= 0 || height <= 0) {
-    alert("Please fill all required fields with valid numbers!");
+  if (!name || !date) {
+    alert("Please fill all required fields!");
     return;
   }
 
-  const materialDropdown = document.getElementById("material");
-  const materialValue = parseFloat(materialDropdown.value);
-  const materialName = materialDropdown.options[materialDropdown.selectedIndex].text;
+  // For now, fixed area of 12x18 inches (~1 sq.ft for simplicity)
+  const area = 1; 
+  const quantity = 1; // fixed quantity for now
 
-  const frameDropdown = document.getElementById("frame");
-  const frameValue = parseFloat(frameDropdown.value);
-  const frameName = frameDropdown.options[frameDropdown.selectedIndex].text;
+  const materialCost = paperRate * area;
+  const printingCost = printingRate * area;
+  const laminationCost = laminationRate * area;
+  const cuttingCost = cuttingRate * area;
+  const eyeletsCost = eyeletsCount * 5; // ₹5 per eyelet placeholder
+  const uvCost = uvRate * area;
+  const foilCost = foilRate * area;
 
-  const laminationDropdown = document.getElementById("lamination");
-  const laminationValue = parseFloat(laminationDropdown.value);
-  const laminationName = laminationDropdown.options[laminationDropdown.selectedIndex].text;
-
-  const addonsDropdown = document.getElementById("addons");
-  const addonsValue = parseFloat(addonsDropdown.value);
-  const addonsName = addonsDropdown.options[addonsDropdown.selectedIndex].text;
-
-  const designing = parseFloat(document.getElementById("designing").value) || 0;
-  const discount = parseFloat(document.getElementById("discount").value) || 0;
-  const remark = document.getElementById("remark").value;
-
-  const area = width * height;
-  const materialCost = area * materialValue;
-  const frameCost = area * frameValue;
-  const laminationCost = area * laminationValue;
-  const addonsCost = area * addonsValue;
-
-  const subtotal = (materialCost + frameCost + laminationCost + addonsCost) * quantity;
-  const total = subtotal - discount + designing;
+  const subtotal = materialCost + printingCost + laminationCost + cuttingCost + eyeletsCost + uvCost + foilCost;
+  const totalAfterDiscount = subtotal - discount + designing;
+  const gstAmount = (gstPercent / 100) * totalAfterDiscount;
+  const totalAmount = totalAfterDiscount + gstAmount;
   const rupee = "₹";
 
   const quoteHTML = `
-    <div id="pdfContent" style="padding:10px; background:#fff; color:#000;">
+    <div>
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <h2>Quotation</h2>
-        <img src="logo.png" alt="Logo" style="width:100px; height:auto;">
+        <img src="logo.png" alt="Logo" style="width:100px;">
       </div>
 
       <p><strong>Customer:</strong> ${name}</p>
       <p><strong>Contact:</strong> ${contact || "N/A"}</p>
       <p><strong>Date:</strong> ${date}</p>
-      <p><strong>Size:</strong> ${width}ft × ${height}ft (${area.toFixed(2)} sq.ft)</p>
-      <p><strong>Quantity:</strong> ${quantity}</p>
 
-      <table style="width:100%; border-collapse: collapse;" border="1">
-        <tr><th>Description</th><th>Amount (${rupee})</th></tr>
-        <tr><td>Material (${materialName})</td><td>${rupee}${(materialCost * quantity).toFixed(2)}</td></tr>
-        <tr><td>Frame (${frameName})</td><td>${rupee}${(frameCost * quantity).toFixed(2)}</td></tr>
-        <tr><td>Lamination (${laminationName})</td><td>${rupee}${(laminationCost * quantity).toFixed(2)}</td></tr>
-        <tr><td>Add-ons (${addonsName})</td><td>${rupee}${(addonsCost * quantity).toFixed(2)}</td></tr>
+      <table>
+        <tr><th>Description</th><th>Cost (${rupee})</th></tr>
+        <tr><td>Paper (${document.getElementById("paperType").selectedOptions[0].text})</td><td>${rupee}${materialCost.toFixed(2)}</td></tr>
+        <tr><td>Printing (${document.getElementById("printingType").selectedOptions[0].text})</td><td>${rupee}${printingCost.toFixed(2)}</td></tr>
+        <tr><td>Lamination (${document.getElementById("lamination").selectedOptions[0].text})</td><td>${rupee}${laminationCost.toFixed(2)}</td></tr>
+        <tr><td>Cutting (${document.getElementById("cutting").selectedOptions[0].text})</td><td>${rupee}${cuttingCost.toFixed(2)}</td></tr>
+        <tr><td>Eyelets (${eyeletsCount})</td><td>${rupee}${eyeletsCost.toFixed(2)}</td></tr>
+        <tr><td>UV (${document.getElementById("uv").selectedOptions[0].text})</td><td>${rupee}${uvCost.toFixed(2)}</td></tr>
+        <tr><td>Foil (${document.getElementById("foil").selectedOptions[0].text})</td><td>${rupee}${foilCost.toFixed(2)}</td></tr>
         <tr><td>Subtotal</td><td>${rupee}${subtotal.toFixed(2)}</td></tr>
         <tr><td>Discount</td><td>-${rupee}${discount.toFixed(2)}</td></tr>
         <tr><td>Designing Charges</td><td>${rupee}${designing.toFixed(2)}</td></tr>
-        <tr><td><strong>Total</strong></td><td><strong>${rupee}${total.toFixed(2)}</strong></td></tr>
+        <tr><td>GST (${gstPercent}%)</td><td>${rupee}${gstAmount.toFixed(2)}</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>${rupee}${totalAmount.toFixed(2)}</strong></td></tr>
       </table>
-
-      ${remark ? `<p><strong>Remark:</strong> ${remark}</p>` : ''}
 
       <p style="font-style:italic; margin-top:10px;">Note: Rates valid for 15 days from quotation date.</p>
 
-      <div class="footer" style="margin-top:20px; font-size:14px;">
-        <strong>Contact:</strong><br>
-        9368885855, 9359995855<br>
-        vimalpress@gmail.com<br>
-        vimalpress.com
-      </div>
-
-      <div class="signature" style="margin-top:40px; text-align:right; font-weight:bold;">
-        ___________________________<br>Authorized Signature
+      <div class="footer">
+        <div>
+          <strong>Contact:</strong><br>
+          9368885855, 9359995855<br>
+          vimalpress@gmail.com<br>
+          vimalpress.com
+        </div>
+        <div style="text-align:right;">
+          <p>Signature</p>
+        </div>
       </div>
     </div>
   `;
@@ -95,16 +91,15 @@ function calculateQuotation() {
 function printQuotation() {
   const quote = document.getElementById("quotation");
   if (!quote.innerHTML.trim()) return alert("Please generate the quotation first!");
-
   const printWindow = window.open("", "_blank");
   printWindow.document.write(`
     <html>
       <head>
         <title>Quotation</title>
         <style>
-          body { font-family: Arial; padding: 20px; }
-          table { width: 100%; border-collapse: collapse; }
-          th, td { border: 1px solid #333; padding: 6px; text-align: left; }
+          body { font-family: Arial; padding:20px; }
+          table { width:100%; border-collapse: collapse; }
+          th, td { border:1px solid #333; padding:6px; text-align:left; }
         </style>
       </head>
       <body>${quote.innerHTML}</body>
@@ -118,15 +113,12 @@ async function downloadPDF() {
   const { jsPDF } = window.jspdf;
   const content = document.getElementById("quotation");
   if (!content.innerHTML.trim()) return alert("Please generate the quotation first!");
-
-  const canvas = await html2canvas(content, { scale: 2, useCORS: true });
+  const canvas = await html2canvas(content, { scale:2, useCORS:true });
   const imgData = canvas.toDataURL("image/png");
   const pdf = new jsPDF("p", "mm", "a4");
-
   const pageWidth = pdf.internal.pageSize.getWidth();
   const imgWidth = pageWidth - 20;
   const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
   pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
   const name = document.getElementById("customerName").value || "Quotation";
   pdf.save(`${name}_Quotation.pdf`);
